@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cosmic Astrologer - Your Personal AI Astrology Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <!-- Landing Page -->
+    <div id="landing-page" class="page active">
+        <div class="cosmic-background">
+            <div class="stars"></div>
+            <div class="container">
+                <div class="landing-content">
+                    <div class="cosmic-logo">
+                        <h1>✨ Cosmic Astrologer</h1>
+                        <p class="tagline">Discover your cosmic blueprint and unlock the secrets of the stars</p>
+                    </div>
+                    
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">🌟</div>
+                            <h3>Birth Chart Analysis</h3>
+                            <p>Get your complete astrological profile based on your birth details</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">🔮</div>
+                            <h3>Life Predictions</h3>
+                            <p>Discover insights about love, career, health, and your future</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">💫</div>
+                            <h3>Ask Questions</h3>
+                            <p>Get personalized answers to your most pressing questions</p>
+                        </div>
+                    </div>
+                    
+                    <button class="btn btn--primary btn--lg cosmic-btn" onclick="showBirthForm()">
+                        Begin Your Cosmic Journey
+                    </button>
+                    
+                    <p class="disclaimer">*For entertainment purposes only</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Birth Details Form -->
+    <div id="birth-form-page" class="page">
+        <div class="cosmic-background">
+            <div class="container">
+                <div class="form-container">
+                    <div class="form-header">
+                        <h2>🌙 Tell Us About Your Cosmic Origins</h2>
+                        <p>Your birth details help us map your unique celestial blueprint</p>
+                    </div>
+                    
+                    <form id="birth-form" class="birth-form" onsubmit="handleFormSubmit(event)">
+                        <div class="form-group">
+                            <label for="fullName" class="form-label">✨ Full Name</label>
+                            <input type="text" id="fullName" name="fullName" class="form-control" required placeholder="Enter your full name">
+                        </div>
+                        
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="birthDate" class="form-label">📅 Birth Date</label>
+                                <input type="date" id="birthDate" name="birthDate" class="form-control" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="birthTime" class="form-label">🕐 Birth Time</label>
+                                <input type="time" id="birthTime" name="birthTime" class="form-control" required>
+                                <small style="color: var(--color-gray-400); font-size: var(--font-size-xs); margin-top: 4px; display: block;">
+                                    Use 24-hour format or approximate time if exact time unknown
+                                </small>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="birthPlace" class="form-label">🌍 Birth Place</label>
+                            <input type="text" id="birthPlace" name="birthPlace" class="form-control" required placeholder="City, Country (e.g., New York, USA)">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gender" class="form-label">⚤ Gender (Optional)</label>
+                            <select id="gender" name="gender" class="form-control">
+                                <option value="">Select gender</option>
+                                <option value="male">Male</option>
+                                <option value="female">Female</option>
+                                <option value="other">Other</option>
+                                <option value="prefer-not-to-say">Prefer not to say</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-actions">
+                            <button type="button" class="btn btn--outline" onclick="showLanding()">Back</button>
+                            <button type="submit" class="btn btn--primary">Generate My Chart</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Page -->
+    <div id="loading-page" class="page">
+        <div class="cosmic-background">
+            <div class="container">
+                <div class="loading-content">
+                    <div class="cosmic-loader">
+                        <div class="orbit">
+                            <div class="planet"></div>
+                        </div>
+                        <div class="orbit orbit-2">
+                            <div class="planet planet-2"></div>
+                        </div>
+                        <div class="orbit orbit-3">
+                            <div class="planet planet-3"></div>
+                        </div>
+                    </div>
+                    <h2>🌌 Consulting the Stars...</h2>
+                    <p class="loading-text">Calculating your cosmic blueprint</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Results Dashboard -->
+    <div id="results-page" class="page">
+        <div class="cosmic-background">
+            <div class="container">
+                <div class="results-header">
+                    <h2 id="welcome-message">Welcome to Your Cosmic Profile</h2>
+                    <div class="zodiac-summary">
+                        <div class="primary-sign">
+                            <span class="sign-symbol" id="primary-symbol">♈</span>
+                            <div class="sign-info">
+                                <h3 id="primary-sign-name">Aries</h3>
+                                <p id="primary-sign-dates">March 21 - April 19</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tabs">
+                    <button class="tab-btn active" onclick="showTab('chart')">🌟 Birth Chart</button>
+                    <button class="tab-btn" onclick="showTab('personality')">👤 Personality</button>
+                    <button class="tab-btn" onclick="showTab('predictions')">🔮 Predictions</button>
+                    <button class="tab-btn" onclick="showTab('questions')">💫 Ask Questions</button>
+                </div>
+                
+                <!-- Birth Chart Tab -->
+                <div id="chart-tab" class="tab-content active">
+                    <div class="chart-section">
+                        <div class="chart-container" style="position: relative; height: 400px;">
+                            <canvas id="birthChart"></canvas>
+                        </div>
+                        <div class="chart-details">
+                            <h3>Your Cosmic Elements</h3>
+                            <div class="elements-grid" id="elements-grid"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Personality Tab -->
+                <div id="personality-tab" class="tab-content">
+                    <div class="personality-section">
+                        <div class="personality-overview" id="personality-overview"></div>
+                        <div class="traits-section">
+                            <h3>Your Key Traits</h3>
+                            <div class="traits-grid" id="traits-grid"></div>
+                        </div>
+                        <div class="compatibility-section">
+                            <h3>Compatibility</h3>
+                            <div class="compatibility-signs" id="compatibility-signs"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Predictions Tab -->
+                <div id="predictions-tab" class="tab-content">
+                    <div class="predictions-section">
+                        <h3>Your Life Predictions</h3>
+                        <div class="predictions-grid" id="predictions-grid"></div>
+                    </div>
+                </div>
+                
+                <!-- Questions Tab -->
+                <div id="questions-tab" class="tab-content">
+                    <div class="questions-section">
+                        <h3>Ask Your Question</h3>
+                        <div class="question-categories">
+                            <h4>Popular Categories:</h4>
+                            <div class="category-buttons" id="category-buttons"></div>
+                        </div>
+                        
+                        <div class="question-form">
+                            <div class="form-group">
+                                <label for="userQuestion" class="form-label">Your Question</label>
+                                <textarea id="userQuestion" class="form-control" rows="3" placeholder="Ask anything about your future, relationships, career, or any aspect of your life..."></textarea>
+                            </div>
+                            <button type="button" class="btn btn--primary" onclick="askQuestion()">Get Cosmic Guidance</button>
+                        </div>
+                        
+                        <div id="question-response" class="question-response hidden"></div>
+                        
+                        <div class="sample-questions">
+                            <h4>Sample Questions:</h4>
+                            <div class="sample-questions-list" id="sample-questions-list"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results-actions">
+                    <button type="button" class="btn btn--outline" onclick="startOver()">Start Over</button>
+                    <button type="button" class="btn btn--secondary" onclick="shareResults()">Share Results</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>
